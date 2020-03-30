@@ -4,11 +4,13 @@ on:
   push:
     branches:
       - master
+    tags:
+      - v1.*
   pull_request:
     branches:
       - master
-  tags:
-    - v1.*
+    tags:
+      - v1.*
 
 jobs:
   cd:
