@@ -29,7 +29,7 @@ docker run -d -p 1399:139 -p 4455:445 -p 1377:137 -p 1388:138 -v /path/to/samba/
 Of course, it can allow developers to build this image manually:
 
 ```BASH
-docker build -t peter-docker-samba .
+docker build -t docker-samba .
 ```
 
 ## References
