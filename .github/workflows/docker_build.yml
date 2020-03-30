@@ -9,8 +9,6 @@ on:
   pull_request:
     branches:
       - master
-    tags:
-      - v1.*
 
 jobs:
   cd:
