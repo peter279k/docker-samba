@@ -1,11 +1,6 @@
-name: Docker SAMBA server image CI build
+name: Docker SAMBA server image CI build for PR
 
 on:
-  push:
-    branches:
-      - master
-    tags:
-      - '*'
   pull_request:
     branches:
       - master
@@ -16,20 +11,5 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: Get the current tag version
-        id: get_version
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
-      - name: Docker login
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build Docker SAMBA server image
         run: docker build -t docker-samba .
-      - name: Tags docker-samba
-        run: |
-          docker tag docker-samba ${{ secrets.DOCKER_USER }}/docker-samba:${{ github.sha }}
-          docker tag docker-samba ${{ secrets.DOCKER_USER }}/docker-samba:latest
-          if [[ ${{ steps.get_version.outputs.VERSION }} != "master" ]]; then docker tag docker-samba:latest ${{ secrets.DOCKER_USER }}/docker-samba:${{ steps.get_version.outputs.VERSION }}; fi;
-      - name: Push Docker docker-samba image
-        run: |
-          docker push ${{ secrets.DOCKER_USER }}/docker-samba:${{ github.sha }}
-          docker push ${{ secrets.DOCKER_USER }}/docker-samba:latest
-          if [[ ${{ steps.get_version.outputs.VERSION }} != "master" ]]; then docker push ${{ secrets.DOCKER_USER }}/docker-samba:${{ steps.get_version.outputs.VERSION }}; fi;
